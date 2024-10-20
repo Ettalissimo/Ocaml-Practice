@@ -42,13 +42,12 @@ let position e l =
 
 
 
-  let rec fold_left f e l =
+let rec fold_left f e l =
     match l with 
     | [] -> e 
     | h::t -> fold_left f (f e h) t
 
-
-  let rec fold_right f l e =
+let rec fold_right f l e =
     match l with
     | [] ->
     | h::t ->  f t (fold_right f h e) 
@@ -57,11 +56,35 @@ let position e l =
 (*3. Ecrire la fonction  ́ rev (qui renverse une liste) a l’aide des deux iterateurs.  ́
 Quelle version a la complexite la plus faible? (cf vid  ́ eos du  ́ List . fold left )*)  
 
-  let rev l = fold_left (fun r x -> x::r ) [] l
+let rev l =  List.fold_left (fun r x -> x::r ) [] l
 
-  let rev l = fold_right (fun r x -> x@[r] ) l [] 
+let rev l =  List.fold_right (fun r x -> x@[r] ) l [] 
 
 
+(*1. Écrire map, qui applique une fonction donnée à tous les éléments d’une liste, i.e. map f [a; b; c] = [f a; f b; f c].*)
+
+let rec map  f l =
+  match l with
+  | [] -> []
+  | h::t -> (f h)::(map f t)
+
+
+(* 2. Écrire flatten (aplatissement d’une liste de listes).*)
+
+let flatten l = List.fold_left (fun x r  = x@r) l [] 
+
+
+(*3. Écrire une fonction fsts qui prend une liste de couples et renvoie la liste des premiers éléments.*)
+
+let fsts l =  List.fold_right (fun (a,_) r = a::r) l []
+
+(*4. Écrire une fonction split telle que : split [(a1,b1);...;(an,bn)]=([a1;...;an],[b1;...;bn]).*)
+
+let  split l = List.fold_right (fun (a,b) (x,y) = (a::x,b::y) ) l ([], [])
+
+(*5. Écrire une fonction qui supprime les doublons d’une liste.*)
+
+let supprimer_doublons l = fold_right(fun x r -> if (List.mem x r ) then r else x::r) l []
 
   
   
