@@ -41,4 +41,27 @@ let position e l =
   List.rev (aux e l [] 0)  (* Inverser les indices avant de les retourner *)
 
 
+
+  let rec fold_left f e l =
+    match l with 
+    | [] -> e 
+    | h::t -> fold_left f (f e h) t
+
+
+  let rec fold_right f l e =
+    match l with
+    | [] ->
+    | h::t ->  f t (fold_right f h e) 
+
+
+(*3. Ecrire la fonction  ́ rev (qui renverse une liste) a l’aide des deux iterateurs.  ́
+Quelle version a la complexite la plus faible? (cf vid  ́ eos du  ́ List . fold left )*)  
+
+  let rev l = fold_left (fun r x -> x::r ) [] l
+
+  let rev l = fold_right (fun r x -> x@[r] ) l [] 
+
+
+
+  
   
