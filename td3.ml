@@ -1,3 +1,6 @@
+(* 1- *)
+
+
 let rec recherche c lb =
   match lb with 
   | [] -> None
@@ -6,6 +9,12 @@ let rec recherche c lb =
                     else if (c = tc) then Some ta
                     else recherche c qlb
 
+let rec appartient lc (Noeud(b,lb)) =
+  match lc with
+  | [] -> b
+  | c::qlc -> match (recherche c lb) with
+              | None -> false
+              | Some a -> appartient qlc a
 
 let rec maj c nouvelleb lb =
   match lb with
@@ -27,5 +36,12 @@ let rec ajout lc (Noeud (b, lb)) =
       in Noeud(b, maj c (ajout qlb arbre) lb)
 
 
+(* 2- *)
+
+let appartient_trie mot Trie(a, fd, fr) =
+  let lmst = fd mot in appartient lmot a 
+
+let ajout_trie mot Trie(a, fd, fr) =
+  let lmot = fd mot in Trie( ajout lmot a , fd , fr )
 
 
