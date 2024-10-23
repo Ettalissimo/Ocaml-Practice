@@ -37,11 +37,24 @@ let rec ajout lc (Noeud (b, lb)) =
 
 
 (* 2- *)
-
+(*Exercice 5 (Test d’appartenance) Écrire la fonction appartient_trie qui teste si un élément appartient
+bien à un ensemble représenté par un arbre lexicographique.*)
 let appartient_trie mot Trie(a, fd, fr) =
   let lmst = fd mot in appartient lmot a 
 
 let ajout_trie mot Trie(a, fd, fr) =
   let lmot = fd mot in Trie( ajout lmot a , fd , fr )
+
+(*— Écrire, dans le module Arbre, la fonction retrait_arbre 
+    qui enlève un élément d’un arbre n-aire.*)
+
+let rec retrait_arbre lc (Noeud (b, lb)) =
+   match lc with
+   | [] -> Noeud (false,lb)
+   | c::qlc -> match (recherche c lb) with
+               |  None -> Noeud (b,lb)
+               |  Some a -> 
+                  let new_sous_arbre = retrait_arbre qlc a in
+                  Noeud (b, maj c new_sous_arbre lb)
 
 
