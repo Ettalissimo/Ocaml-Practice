@@ -36,3 +36,24 @@ module File : Collection
                     | x::q -> (x , q)
   end
 
+
+
+
+(* Écrire une interface qui abstrait les paramètres d’un itérateur fold. *)
+
+module type Fold =
+  sig
+    type a
+    type b
+    val cas_de_base : b
+    val traite_et_combine : a  -> b -> b
+  end
+
+
+module create_list_int : Fold =
+  struct 
+    type a = 'b list
+    type b = 'int
+    let cas_de_base = []
+    let traite_et_combine elt lc  = elt::lc
+    
