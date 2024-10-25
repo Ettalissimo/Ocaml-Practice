@@ -74,14 +74,28 @@ let set i lst e =
 
 
 (*  Exercice 2 : *)
-let decompose x =
-  let rec aux x acc =  
-    match x with
-    | 0 -> acc
-    | _ -> let q =x / base in
-           let r = x mod base
-           in  aux q (r::acc)
-  in aux x []
 
+module Conversion (B:Base) =
+  struct
 
+    let decompose x =
+      let rec aux x acc =  
+        match x with
+        | 0 -> acc
+        | _ -> let q =x / base in
+               let r = x mod base
+               in  aux q (r::acc)
+      in aux x []
+
+    let recompose l =
+      let rec aux l acc =  
+        match l with
+        | [] -> 0
+        | h::t -> let p = (List.length l) - 1 in x = h * (base** p) in
+                  aux t (x + acc)
+      in aux l 0
+
+    let recompose l =
+      List.fold_left (fun acc x = acc * B.base + x  ) 0 l
+  end
   
