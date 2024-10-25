@@ -73,3 +73,47 @@ let retrait mot trie =
       let nouvel_arbre = retrait_arbre lmot (Noeud (b, lb)) in  
       Trie (nouvel_arbre, fd, fr)  
 
+(* Exercice 3 : Parcours lexicographique *)
+
+
+let rec parcours_lexico prefixe (Noeud (b, lb)) =
+  let mots = if b then [prefixe] else [] in
+  List.fold_left (fun acc (c, sous_arbre) ->
+    acc @ parcours_lexico (prefixe ^ (String.make 1 c)) sous_arbre
+  ) mots lb
+
+let parcours trie =
+  match trie with
+  | Trie (a, _, fr) -> List.map fr (parcours_lexico "" a)
+
+
+(* Affichege *)
+
+let affiche trie =
+  let mots = parcours trie in
+  List.iter print_endline mots
+
+
+
+(* Normalisation *)
+
+let rec normalisation (Noeud (b, lb)) =
+  let branches_nettoyees = 
+    List.fold_left (fun acc (c, sous_arbre) ->
+      let sous_arbre_normalise = normalisation sous_arbre in
+      match sous_arbre_normalise with
+      | Noeud (false, []) -> acc (* Supprime les branches inutiles *)
+      | _ -> (c, sous_arbre_normalise) :: acc
+    ) [] lb
+  in
+  Noeud (b, List.rev branches_nettoyees)
+
+(* Retrait normalisé *)
+
+
+let retrait_normalise mot trie =
+  match trie with
+  | Trie (a, fd, fr) ->
+      let lmot = fd mot in
+      Trie (normalisation (retrait_arbre lmot a), fd, fr)
+
