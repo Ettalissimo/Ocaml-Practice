@@ -71,3 +71,17 @@ let set i lst e =
   match lst with
   | [] -> raise ArgumentInvalide
   | _ -> List.map (fun j x = if (j = i ) then e else x) lst
+
+
+(*  Exercice 2 : *)
+let decompose x =
+  let rec aux x acc =  
+    match x with
+    | 0 -> acc
+    | _ -> let q =x / base in
+           let r = x mod base
+           in  aux q (r::acc)
+  in aux x []
+
+
+  
